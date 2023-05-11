@@ -7,10 +7,16 @@ import { catchError, delay, map } from 'rxjs/operators';
 @Injectable({ providedIn: 'root' })
 export class CountriesService {
 
-  private apiUrl: string = 'https://restcountries.com/v3.1'
+  private apiUrl: string = 'https://restcountries.com/v3.1';
+
+  public cacheStore = {
+    byCapital: { term: '', countries: [] },
+    byCountries: { term: '', countries: [] },
+    byRegion: { term: '', countries: [] },
+  }
 
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   private getCountriesRequest( url: string): Observable<Country[]> {
     return this.http.get<Country[]>( url )
